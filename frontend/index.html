@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR Documenti Identità</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 50%, #fff8e1 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+            border: 2px solid #81c784;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e8, #f0f8f0);
+            border-radius: 15px;
+            border: 1px solid #81c784;
+        }
+
+        .logo-area {
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            border: 2px dashed #81c784;
+            color: #666;
+            font-style: italic;
+        }
+
+        .title-area {
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            color: #555;
+            font-size: 1.2em;
+            font-weight: 500;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #ffc107;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .upload-area {
+            border: 3px dashed #81c784;
+            border-radius: 15px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            background: #f9fff9;
+        }
+
+        .upload-area:hover {
+            border-color: #66bb6a;
+            background: #e8f5e8;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            border-color: #4caf50;
+            background: #e0f2e0;
+        }
+
+        .upload-icon {
+            font-size: 4em;
+            color: #81c784;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-area:hover .upload-icon {
+            transform: scale(1.1);
+        }
+
+        .upload-text {
+            color: #2e7d32;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .upload-subtext {
+            color: #666;
+            font-size: 0.9em;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #81c784, #66bb6a);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(129, 199, 132, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(129, 199, 132, 0.4);
+            background: linear-gradient(135deg, #66bb6a, #4caf50);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn.gold {
+            background: linear-gradient(135deg, #ffc107, #ff9800);
+            box-shadow: 0 5px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn.gold:hover {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            box-shadow: 0 8px 25px rgba(255, 193, 7, 0.4);
+        }
+
+        .preview {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .preview img {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 2px solid #81c784;
+        }
+
+        .results {
+            background: linear-gradient(135deg, #f9fff9, #e8f5e8);
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 2px solid #81c784;
+        }
+
+        .results h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: 700;
+        }
+
+        .field-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .field-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .field {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .field label {
+            font-weight: 600;
+            color: #2e7d32;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            font-size: 1em;
+            background: #f9fff9;
+            transition: border-color 0.3s ease;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: #81c784;
+            box-shadow: 0 0 5px rgba(129, 199, 132, 0.3);
+        }
+
+        .processing-steps {
+            background: white;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .processing-steps h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 10px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            background: #f9fff9;
+        }
+
+        .step.active {
+            background: #e8f5e8;
+            border-left: 3px solid #81c784;
+        }
+
+        .step.completed {
+            background: #e0f2e0;
+            border-left: 3px solid #4caf50;
+        }
+
+        .step-icon {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .raw-text {
+            background: #f9fff9;
+            border: 2px solid #c8e6c9;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            color: #555;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #e57373;
+        }
+
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .images-section {
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border-radius: 15px;
+            border: 1px solid #ffc107;
+            text-align: center;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .image-placeholder {
+            height: 120px;
+            background: white;
+            border: 2px dashed #ffc107;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-style: italic;
+            transition: all 0.3s ease;
+        }
+
+        .image-placeholder:hover {
+            background: #fff8e1;
+            border-color: #ff9800;
+        }
+
+        .section-title {
+            color: #f57c00;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="logo-area">
+                [Area Logo - Inserisci qui il tuo logo]
+            </div>
+            <div class="title-area">
+                <h1>OCR Documenti Identità</h1>
+                <p class="subtitle">Estrazione automatica dati con Tesseract.js + Mistral AI</p>
+            </div>
+        </div>
+        
+        <div class="info-banner">
+            📄 <strong>Servizio professionale</strong> per l'estrazione automatica di dati da documenti di identità italiani. 
+            Tecnologia avanzata OCR combinata con intelligenza artificiale per risultati precisi e affidabili.
+        </div>
+        
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📄</div>
+            <div class="upload-text">Trascina qui il documento o clicca per selezionare</div>
+            <div class="upload-subtext">Supportati: JPG, PNG (max 5MB) - Per migliori risultati usa immagini chiare e ben illuminate</div>
+            <input type="file" id="fileInput" accept="image/*">
+        </div>
+        
+        <div class="preview" id="preview"></div>
+        
+        <div style="text-align: center;">
+            <button class="btn" id="analyzeBtn" disabled>🔍 Analizza Documento</button>
+            <button class="btn gold" onclick="copyToClipboard()" id="copyBtn" style="display: none;">📋 Copia Dati JSON</button>
+            <button class="btn" id="clearBtn">🗑️ Pulisci Tutto</button>
+        </div>
+        
+        <div class="processing-steps" id="steps" style="display: none;">
+            <h4>🔄 Progresso Analisi</h4>
+            <div class="step" id="step1">
+                <div class="step-icon">⏳</div>
+                <div>1. Preprocessing immagine...</div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-icon">⏳</div>
+                <div>2. Estrazione testo con Tesseract.js...</div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-icon">⏳</div>
+                <div>3. Elaborazione con Mistral AI...</div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-icon">⏳</div>
+                <div>4. Strutturazione dati...</div>
+            </div>
+        </div>
+        
+        <div class="raw-text" id="rawText" style="display: none;">
+            <strong>Testo estratto dall'OCR:</strong>
+            <pre id="ocrOutput"></pre>
+        </div>
+        
+        <div class="results" id="results" style="display: none;">
+            <h3>📋 Dati Estratti dal Documento</h3>
+            <div class="field-group">
+                <div class="field">
+                    <label>Nome</label>
+                    <input type="text" id="nome">
+                </div>
+                <div class="field">
+                    <label>Cognome</label>
+                    <input type="text" id="cognome">
+                </div>
+                <div class="field">
+                    <label>Data di Nascita</label>
+                    <input type="text" id="dataNascita">
+                </div>
+                <div class="field">
+                    <label>Luogo di Nascita</label>
+                    <input type="text" id="luogoNascita">
+                </div>
+                <div class="field">
+                    <label>Codice Fiscale</label>
+                    <input type="text" id="codiceFiscale">
+                </div>
+                <div class="field">
+                    <label>Numero Documento</label>
+                    <input type="text" id="numeroDocumento">
+                </div>
+                <div class="field">
+                    <label>Data Rilascio</label>
+                    <input type="text" id="dataRilascio">
+                </div>
+                <div class="field">
+                    <label>Data Scadenza</label>
+                    <input type="text" id="dataScadenza">
+                </div>
+            </div>
+        </div>
+
+       
+    </div>
+
+    <!-- Tesseract.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
+    
+    <script>
+        // Elementi DOM
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const preview = document.getElementById('preview');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const steps = document.getElementById('steps');
+        const rawText = document.getElementById('rawText');
+        const ocrOutput = document.getElementById('ocrOutput');
+        const results = document.getElementById('results');
+
+        let selectedFile = null;
+        let extractedData = null;
+
+        // Event listeners
+        uploadArea.addEventListener('click', () => fileInput.click());
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFileSelect(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        analyzeBtn.addEventListener('click', analyzeDocument);
+        clearBtn.addEventListener('click', clearAll);
+
+        function handleFileSelect(file) {
+            // Validazione file
+            if (file.size > 5 * 1024 * 1024) {
+                showError('File troppo grande. Dimensione massima: 5MB');
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                showError('Solo immagini JPG/PNG supportate per OCR ottimale');
+                return;
+            }
+
+            selectedFile = file;
+            showPreview(file);
+            analyzeBtn.disabled = false;
+        }
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview documento">`;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function analyzeDocument() {
+            if (!selectedFile) return;
+
+            steps.style.display = 'block';
+            results.style.display = 'none';
+            rawText.style.display = 'none';
+            copyBtn.style.display = 'none';
+            analyzeBtn.disabled = true;
+
+            try {
+                // Step 1: Preprocessing
+                updateStep('step1', 'active');
+                const processedImage = await preprocessImage(selectedFile);
+                updateStep('step1', 'completed');
+
+                // Step 2: OCR con Tesseract.js
+                updateStep('step2', 'active');
+                const ocrText = await performOCR(processedImage);
+                ocrOutput.textContent = ocrText;
+                rawText.style.display = 'block';
+                updateStep('step2', 'completed');
+
+                // Step 3: Elaborazione con Mistral
+                updateStep('step3', 'active');
+                const structuredData = await processWithMistral(ocrText);
+                updateStep('step3', 'completed');
+
+                // Step 4: Visualizzazione risultati
+                updateStep('step4', 'active');
+                displayResults(structuredData);
+                updateStep('step4', 'completed');
+
+                showSuccess('✅ Documento analizzato con successo!');
+
+            } catch (error) {
+                showError('Errore durante l\'analisi: ' + error.message);
+                console.error(error);
+            } finally {
+                analyzeBtn.disabled = false;
+            }
+        }
+
+        async function preprocessImage(file) {
+            // Preprocessing semplice per migliorare OCR
+            return new Promise((resolve) => {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    
+                    // Applica filtri per migliorare la leggibilità
+                    ctx.filter = 'contrast(1.2) brightness(1.1)';
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob(resolve, 'image/png');
+                };
+
+                img.src = URL.createObjectURL(file);
+            });
+        }
+
+        async function performOCR(imageFile) {
+            const worker = await Tesseract.createWorker('ita', 1, {
+                logger: m => {
+                    if (m.status === 'recognizing text') {
+                        document.querySelector('#step2 div:last-child').textContent = 
+                            `2. OCR in corso... ${Math.round(m.progress * 100)}%`;
+                    }
+                }
+            });
+
+            const { data: { text } } = await worker.recognize(imageFile, {
+                rectangle: { top: 0, left: 0, width: 0, height: 0 },
+                preserve_interword_spaces: 1
+            });
+
+            await worker.terminate();
+            return text;
+        }
+
+        async function processWithMistral(ocrText) {
+            try {
+                const response = await fetch('/api/mistral/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ocrText: ocrText
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.error || `Errore HTTP ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    return result.data;
+                } else {
+                    throw new Error('Risposta non valida dal server');
+                }
+
+            } catch (error) {
+                console.error('Errore chiamata API:', error);
+                throw error;
+            }
+        }
+
+        function updateStep(stepId, status) {
+            const step = document.getElementById(stepId);
+            step.className = `step ${status}`;
+            
+            if (status === 'completed') {
+                step.querySelector('.step-icon').textContent = '✅';
+            } else if (status === 'active') {
+                step.querySelector('.step-icon').textContent = '⏳';
+            }
+        }
+
+        function displayResults(data) {
+            extractedData = data;
+            
+            document.getElementById('nome').value = data.nome || '';
+            document.getElementById('cognome').value = data.cognome || '';
+            document.getElementById('dataNascita').value = data.dataNascita || '';
+            document.getElementById('luogoNascita').value = data.luogoNascita || '';
+            document.getElementById('codiceFiscale').value = data.codiceFiscale || '';
+            document.getElementById('numeroDocumento').value = data.numeroDocumento || '';
+            document.getElementById('dataRilascio').value = data.dataRilascio || '';
+            document.getElementById('dataScadenza').value = data.dataScadenza || '';
+
+            results.style.display = 'block';
+            copyBtn.style.display = 'inline-block';
+        }
+
+        function copyToClipboard() {
+            if (extractedData) {
+                navigator.clipboard.writeText(JSON.stringify(extractedData, null, 2));
+                showSuccess('📋 Dati copiati negli appunti!');
+            }
+        }
+
+        function clearAll() {
+            selectedFile = null;
+            extractedData = null;
+            fileInput.value = '';
+            preview.innerHTML = '';
+            results.style.display = 'none';
+            rawText.style.display = 'none';
+            steps.style.display = 'none';
+            copyBtn.style.display = 'none';
+            analyzeBtn.disabled = true;
+            
+            // Reset steps
+            ['step1', 'step2', 'step3', 'step4'].forEach(id => {
+                const step = document.getElementById(id);
+                step.className = 'step';
+                step.querySelector('.step-icon').textContent = '⏳';
+            });
+            
+            // Pulisci messaggi
+            const messages = document.querySelectorAll('.error, .success');
+            messages.forEach(msg => msg.remove());
+        }
+
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error';
+            errorDiv.textContent = message;
+            
+            const oldMessages = document.querySelectorAll('.error, .success');
+            oldMessages.forEach(msg => msg.remove());
+            
+            document.querySelector('.container').insertBefore(errorDiv, results);
+        }
+
+        function showSuccess(message) {
+            const successDiv = document.createElement('div');
+            successDiv.className = 'success';
+            successDiv.textContent = message;
+            
+            const oldMessages = document.querySelectorAll('.error, .success');
+            oldMessages.forEach(msg => msg.remove());
+            
+            document.querySelector('.container').insertBefore(successDiv, results);
+        }
+    </script>
+</body>
+</html>
