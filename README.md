@@ -1,4 +1,4 @@
-# AI-IDetector
+# AI-IDetector by Souhail Nmili
 # OCR Documenti Identità
 
 Applicazione web per l'estrazione automatica di dati da documenti di identità italiani utilizzando OCR (Tesseract.js) e intelligenza artificiale (Mistral AI).
