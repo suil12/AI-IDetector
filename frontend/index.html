@@ -65,10 +65,6 @@
             font-style: italic;
         }
 
-        .title-area {
-            margin-bottom: 15px;
-        }
-
         h1 {
             color: #2e7d32;
             margin-bottom: 10px;
@@ -193,12 +189,103 @@
             border: 2px solid #81c784;
         }
 
+        .processing-steps {
+            background: white;
+            border: 2px solid #c8e6c9;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .processing-steps h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            padding: 10px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            background: #f9fff9;
+        }
+
+        .step.active {
+            background: #e8f5e8;
+            border-left: 4px solid #81c784;
+        }
+
+        .step.completed {
+            background: #e0f2e0;
+            border-left: 4px solid #4caf50;
+        }
+
+        .step-icon {
+            margin-right: 15px;
+            font-size: 1.3em;
+            min-width: 30px;
+        }
+
+        .step-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #81c784, #66bb6a);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .ocr-text {
+            background: #f9fff9;
+            border: 2px solid #c8e6c9;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .ocr-text h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .ocr-text pre {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #c8e6c9;
+            font-family: monospace;
+            font-size: 0.9em;
+            max-height: 200px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
         .results {
             background: linear-gradient(135deg, #f9fff9, #e8f5e8);
             padding: 30px;
             border-radius: 15px;
             margin-top: 20px;
             border: 2px solid #81c784;
+            display: none;
         }
 
         .results h3 {
@@ -255,58 +342,6 @@
             box-shadow: 0 0 5px rgba(129, 199, 132, 0.3);
         }
 
-        .processing-steps {
-            background: white;
-            border: 2px solid #c8e6c9;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .processing-steps h4 {
-            color: #2e7d32;
-            margin-bottom: 15px;
-            font-size: 1.2em;
-        }
-
-        .step {
-            display: flex;
-            align-items: center;
-            margin: 12px 0;
-            padding: 10px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            background: #f9fff9;
-        }
-
-        .step.active {
-            background: #e8f5e8;
-            border-left: 3px solid #81c784;
-        }
-
-        .step.completed {
-            background: #e0f2e0;
-            border-left: 3px solid #4caf50;
-        }
-
-        .step-icon {
-            margin-right: 10px;
-            font-size: 1.2em;
-        }
-
-        .raw-text {
-            background: #f9fff9;
-            border: 2px solid #c8e6c9;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-            font-family: monospace;
-            font-size: 0.9em;
-            max-height: 200px;
-            overflow-y: auto;
-            color: #555;
-        }
-
         .error {
             background: #ffebee;
             color: #c62828;
@@ -325,45 +360,13 @@
             border-left: 4px solid #4caf50;
         }
 
-        .images-section {
-            margin: 20px 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #fff8e1, #ffecb3);
-            border-radius: 15px;
-            border: 1px solid #ffc107;
-            text-align: center;
-        }
-
-        .images-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .image-placeholder {
-            height: 120px;
-            background: white;
-            border: 2px dashed #ffc107;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #666;
-            font-style: italic;
-            transition: all 0.3s ease;
-        }
-
-        .image-placeholder:hover {
+        .warning {
             background: #fff8e1;
-            border-color: #ff9800;
-        }
-
-        .section-title {
             color: #f57c00;
-            font-size: 1.1em;
-            font-weight: 600;
-            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
         }
     </style>
 </head>
@@ -373,58 +376,68 @@
             <div class="logo-area">
                 [Area Logo - Inserisci qui il tuo logo]
             </div>
-            <div class="title-area">
-                <h1>OCR Documenti Identità</h1>
-                <p class="subtitle">Estrazione automatica dati con Tesseract.js + Mistral AI</p>
-            </div>
+            <h1>OCR Documenti Identità</h1>
+            <p class="subtitle">Estrazione automatica con riconoscimento ottico</p>
         </div>
         
         <div class="info-banner">
-            📄 <strong>Servizio professionale</strong> per l'estrazione automatica di dati da documenti di identità italiani. 
-            Tecnologia avanzata OCR combinata con intelligenza artificiale per risultati precisi e affidabili.
+            📄 <strong>OCR Automatico</strong> - Carica l'immagine del documento e il sistema estrarrà automaticamente 
+            il testo utilizzando tecnologia OCR avanzata, poi analizzerà i dati con intelligenza artificiale.
         </div>
         
         <div class="upload-area" id="uploadArea">
             <div class="upload-icon">📄</div>
-            <div class="upload-text">Trascina qui il documento o clicca per selezionare</div>
-            <div class="upload-subtext">Supportati: JPG, PNG (max 5MB) - Per migliori risultati usa immagini chiare e ben illuminate</div>
+            <div class="upload-text">Carica immagine del documento</div>
+            <div class="upload-subtext">Supportati: JPG, PNG (max 5MB) - Il testo sarà estratto automaticamente</div>
             <input type="file" id="fileInput" accept="image/*">
         </div>
         
         <div class="preview" id="preview"></div>
         
         <div style="text-align: center;">
-            <button class="btn" id="analyzeBtn" disabled>🔍 Analizza Documento</button>
-            <button class="btn gold" onclick="copyToClipboard()" id="copyBtn" style="display: none;">📋 Copia Dati JSON</button>
+            <button class="btn" id="analyzeBtn" disabled>🔍 Avvia OCR e Analisi</button>
+            <button class="btn gold" id="copyBtn" style="display: none;">📋 Copia Dati JSON</button>
             <button class="btn" id="clearBtn">🗑️ Pulisci Tutto</button>
         </div>
         
-        <div class="processing-steps" id="steps" style="display: none;">
-            <h4>🔄 Progresso Analisi</h4>
+        <div class="processing-steps" id="steps">
+            <h4>🔄 Progresso Elaborazione</h4>
             <div class="step" id="step1">
                 <div class="step-icon">⏳</div>
-                <div>1. Preprocessing immagine...</div>
+                <div class="step-text">1. Preprocessing immagine...</div>
             </div>
             <div class="step" id="step2">
                 <div class="step-icon">⏳</div>
-                <div>2. Estrazione testo con Tesseract.js...</div>
+                <div class="step-text">2. Riconoscimento testo OCR...</div>
+                <div class="progress-bar" style="margin-top: 5px;">
+                    <div class="progress-fill" id="ocrProgress"></div>
+                </div>
             </div>
             <div class="step" id="step3">
                 <div class="step-icon">⏳</div>
-                <div>3. Elaborazione con Mistral AI...</div>
+                <div class="step-text">3. Analisi con Mistral AI...</div>
             </div>
             <div class="step" id="step4">
                 <div class="step-icon">⏳</div>
-                <div>4. Strutturazione dati...</div>
+                <div class="step-text">4. Strutturazione dati finali...</div>
             </div>
         </div>
         
-        <div class="raw-text" id="rawText" style="display: none;">
-            <strong>Testo estratto dall'OCR:</strong>
-            <pre id="ocrOutput"></pre>
+        <div class="ocr-text" id="ocrText">
+            <h4>📝 Analisi del testo estratto:</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 15px;">
+                <div>
+                    <h5 style="color: #666; margin-bottom: 10px;">Testo OCR originale:</h5>
+                    <pre id="ocrOutput" style="background: #f0f0f0; padding: 10px; border-radius: 5px; font-size: 0.8em; max-height: 150px; overflow-y: auto;"></pre>
+                </div>
+                <div>
+                    <h5 style="color: #2e7d32; margin-bottom: 10px;">Testo strutturato per AI:</h5>
+                    <pre id="structuredOutput" style="background: #e8f5e8; padding: 10px; border-radius: 5px; font-size: 0.8em; max-height: 150px; overflow-y: auto;"></pre>
+                </div>
+            </div>
         </div>
         
-        <div class="results" id="results" style="display: none;">
+        <div class="results" id="results">
             <h3>📋 Dati Estratti dal Documento</h3>
             <div class="field-group">
                 <div class="field">
@@ -461,14 +474,16 @@
                 </div>
             </div>
         </div>
-
-       
     </div>
 
-    <!-- Tesseract.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/5.0.4/tesseract.min.js"></script>
+    <!-- Tesseract.js from unpkg -->
+    <script src="https://unpkg.com/tesseract.js@v5.0.4/dist/tesseract.min.js"></script>
     
     <script>
+        let selectedFile = null;
+        let extractedData = null;
+        let ocrWorker = null;
+
         // Elementi DOM
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
@@ -477,14 +492,11 @@
         const clearBtn = document.getElementById('clearBtn');
         const copyBtn = document.getElementById('copyBtn');
         const steps = document.getElementById('steps');
-        const rawText = document.getElementById('rawText');
+        const ocrText = document.getElementById('ocrText');
         const ocrOutput = document.getElementById('ocrOutput');
         const results = document.getElementById('results');
 
-        let selectedFile = null;
-        let extractedData = null;
-
-        // Event listeners
+        // Event listeners per drag & drop
         uploadArea.addEventListener('click', () => fileInput.click());
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -508,7 +520,9 @@
             }
         });
 
+        // Event listeners per i pulsanti
         analyzeBtn.addEventListener('click', analyzeDocument);
+        copyBtn.addEventListener('click', copyToClipboard);
         clearBtn.addEventListener('click', clearAll);
 
         function handleFileSelect(file) {
@@ -519,7 +533,7 @@
             }
 
             if (!file.type.startsWith('image/')) {
-                showError('Solo immagini JPG/PNG supportate per OCR ottimale');
+                showError('Solo immagini JPG/PNG supportate');
                 return;
             }
 
@@ -537,97 +551,359 @@
         }
 
         async function analyzeDocument() {
-            if (!selectedFile) return;
+            if (!selectedFile) {
+                showError('Seleziona prima un\'immagine del documento');
+                return;
+            }
 
+            // Reset UI
             steps.style.display = 'block';
             results.style.display = 'none';
-            rawText.style.display = 'none';
+            ocrText.style.display = 'none';
             copyBtn.style.display = 'none';
             analyzeBtn.disabled = true;
+            clearMessages();
 
-            try {
-                // Step 1: Preprocessing
-                updateStep('step1', 'active');
-                const processedImage = await preprocessImage(selectedFile);
-                updateStep('step1', 'completed');
+            let attemptCount = 0;
+            const maxAttempts = 2;
 
-                // Step 2: OCR con Tesseract.js
-                updateStep('step2', 'active');
-                const ocrText = await performOCR(processedImage);
-                ocrOutput.textContent = ocrText;
-                rawText.style.display = 'block';
-                updateStep('step2', 'completed');
+            while (attemptCount < maxAttempts) {
+                try {
+                    attemptCount++;
+                    
+                    if (attemptCount > 1) {
+                        showWarning(`🔄 Tentativo ${attemptCount} di ${maxAttempts}...`);
+                    }
 
-                // Step 3: Elaborazione con Mistral
-                updateStep('step3', 'active');
-                const structuredData = await processWithMistral(ocrText);
-                updateStep('step3', 'completed');
+                    // Step 1: Preprocessing
+                    updateStep('step1', 'active');
+                    const processedImage = await preprocessImage(selectedFile);
+                    updateStep('step1', 'completed');
 
-                // Step 4: Visualizzazione risultati
-                updateStep('step4', 'active');
-                displayResults(structuredData);
-                updateStep('step4', 'completed');
+                    // Step 2: OCR
+                    updateStep('step2', 'active');
+                    const extractedText = await performOCR(processedImage);
+                    
+                    console.log('=== DEBUG OCR ===');
+                    console.log('Tentativo:', attemptCount);
+                    console.log('Testo estratto lunghezza:', extractedText.length);
+                    console.log('Testo estratto:', extractedText.substring(0, 300));
+                    console.log('================');
+                    
+                    if (!extractedText || extractedText.trim().length < 10) {
+                        if (attemptCount < maxAttempts) {
+                            console.log('Testo troppo corto, riprovo...');
+                            continue;
+                        }
+                        showWarning('⚠️ Testo estratto troppo corto. L\'immagine potrebbe non essere chiara abbastanza.');
+                        throw new Error('Testo non rilevato o troppo corto dopo tutti i tentativi.');
+                    }
 
-                showSuccess('✅ Documento analizzato con successo!');
+                    ocrOutput.textContent = extractedText;
+                    ocrText.style.display = 'block';
+                    updateStep('step2', 'completed');
 
-            } catch (error) {
-                showError('Errore durante l\'analisi: ' + error.message);
-                console.error(error);
-            } finally {
-                analyzeBtn.disabled = false;
+                    // Step 3: Analisi con Mistral
+                    updateStep('step3', 'active');
+                    const structuredData = await analyzeWithMistral(extractedText);
+                    updateStep('step3', 'completed');
+
+                    // Step 4: Visualizzazione risultati
+                    updateStep('step4', 'active');
+                    displayResults(structuredData);
+                    updateStep('step4', 'completed');
+
+                    showSuccess(`✅ Documento analizzato con successo! (tentativo ${attemptCount})`);
+                    return; // Successo, esci dal loop
+
+                } catch (error) {
+                    console.error(`Errore tentativo ${attemptCount}:`, error);
+                    
+                    if (attemptCount >= maxAttempts) {
+                        // Tutti i tentativi falliti
+                        showError(`❌ Analisi fallita dopo ${maxAttempts} tentativi: ${error.message}`);
+                        
+                        // Mostra consigli per migliorare l'immagine
+                        setTimeout(() => {
+                            showWarning(`💡 Suggerimenti: 
+• Usa un'immagine più chiara e ben illuminata
+• Assicurati che il documento sia piatto (senza pieghe)
+• Evita riflessi e ombre
+• Prova con un'immagine di dimensioni diverse`);
+                        }, 1000);
+                        
+                        return;
+                    }
+                    
+                    // Pausa tra tentativi
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                }
             }
+
+            analyzeBtn.disabled = false;
         }
 
         async function preprocessImage(file) {
-            // Preprocessing semplice per migliorare OCR
             return new Promise((resolve) => {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 const img = new Image();
 
                 img.onload = () => {
-                    canvas.width = img.width;
-                    canvas.height = img.height;
+                    console.log('Preprocessing immagine per migliorare OCR...');
+                    console.log('Dimensioni originali:', img.width, 'x', img.height);
                     
-                    // Applica filtri per migliorare la leggibilità
-                    ctx.filter = 'contrast(1.2) brightness(1.1)';
-                    ctx.drawImage(img, 0, 0);
+                    // Calcola dimensioni ottimali per OCR
+                    let width = img.width;
+                    let height = img.height;
                     
-                    canvas.toBlob(resolve, 'image/png');
+                    // Aumenta risoluzione se troppo piccola (migliora OCR)
+                    const minDimension = 1200;
+                    if (Math.min(width, height) < minDimension) {
+                        const scale = minDimension / Math.min(width, height);
+                        width *= scale;
+                        height *= scale;
+                    }
+                    
+                    // Limita se troppo grande (evita crash)
+                    const maxDimension = 3000;
+                    if (Math.max(width, height) > maxDimension) {
+                        const scale = maxDimension / Math.max(width, height);
+                        width *= scale;
+                        height *= scale;
+                    }
+                    
+                    // Assicurati dimensioni intere
+                    width = Math.round(width);
+                    height = Math.round(height);
+                    
+                    console.log('Dimensioni finali:', width, 'x', height);
+                    
+                    canvas.width = width;
+                    canvas.height = height;
+                    
+                    // Migliora la qualità di ridimensionamento
+                    ctx.imageSmoothingEnabled = true;
+                    ctx.imageSmoothingQuality = 'high';
+                    
+                    // Disegna immagine ridimensionata
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Ottieni i dati dell'immagine per il preprocessing
+                    const imageData = ctx.getImageData(0, 0, width, height);
+                    const data = imageData.data;
+                    
+                    console.log('Applicazione filtri per migliorare contrasto...');
+                    
+                    // ALGORITMO 1: Conversione in scala di grigi ottimizzata
+                    for (let i = 0; i < data.length; i += 4) {
+                        // Formula luminanza ottimizzata per testo
+                        const gray = Math.round(
+                            0.299 * data[i] +     // Rosso
+                            0.587 * data[i + 1] + // Verde  
+                            0.114 * data[i + 2]   // Blu
+                        );
+                        
+                        data[i] = gray;     // R
+                        data[i + 1] = gray; // G
+                        data[i + 2] = gray; // B
+                        // Alpha rimane invariato
+                    }
+                    
+                    // ALGORITMO 2: Equalizzazione istogramma semplificata
+                    // Calcola istogramma
+                    const histogram = new Array(256).fill(0);
+                    for (let i = 0; i < data.length; i += 4) {
+                        histogram[data[i]]++;
+                    }
+                    
+                    // Calcola CDF (Cumulative Distribution Function)
+                    const cdf = [...histogram];
+                    for (let i = 1; i < 256; i++) {
+                        cdf[i] += cdf[i - 1];
+                    }
+                    
+                    // Normalizza CDF
+                    const totalPixels = width * height;
+                    const cdfMin = cdf.find(x => x > 0);
+                    
+                    // ALGORITMO 3: Contrasto adattivo avanzato
+                    for (let i = 0; i < data.length; i += 4) {
+                        const oldValue = data[i];
+                        
+                        // Equalizzazione istogramma
+                        let newValue = Math.round(((cdf[oldValue] - cdfMin) / (totalPixels - cdfMin)) * 255);
+                        
+                        // Aumenta contrasto con curva S
+                        newValue = applySCurve(newValue);
+                        
+                        // Soglia binaria intelligente per documenti
+                        newValue = adaptiveThreshold(newValue, oldValue);
+                        
+                        data[i] = newValue;     // R
+                        data[i + 1] = newValue; // G  
+                        data[i + 2] = newValue; // B
+                    }
+                    
+                    console.log('Preprocessing completato, generazione immagine finale...');
+                    
+                    // Rimetti i dati processati nel canvas
+                    ctx.putImageData(imageData, 0, 0);
+                    
+                    // Genera blob finale
+                    canvas.toBlob((blob) => {
+                        if (blob) {
+                            console.log('Immagine processata creata:', blob.size, 'bytes');
+                            resolve(blob);
+                        } else {
+                            console.warn('Errore generazione blob, uso originale');
+                            resolve(file);
+                        }
+                    }, 'image/png', 1.0);
+                };
+
+                img.onerror = () => {
+                    console.error('Errore caricamento immagine per preprocessing');
+                    resolve(file);
                 };
 
                 img.src = URL.createObjectURL(file);
             });
         }
 
-        async function performOCR(imageFile) {
-            const worker = await Tesseract.createWorker('ita', 1, {
-                logger: m => {
-                    if (m.status === 'recognizing text') {
-                        document.querySelector('#step2 div:last-child').textContent = 
-                            `2. OCR in corso... ${Math.round(m.progress * 100)}%`;
-                    }
-                }
-            });
-
-            const { data: { text } } = await worker.recognize(imageFile, {
-                rectangle: { top: 0, left: 0, width: 0, height: 0 },
-                preserve_interword_spaces: 1
-            });
-
-            await worker.terminate();
-            return text;
+        // Funzione per applicare curva S (migliora contrasto)
+        function applySCurve(value) {
+            // Normalizza 0-255 -> 0-1
+            const normalized = value / 255;
+            // Applica curva S (sigmoid)
+            const curved = 1 / (1 + Math.exp(-12 * (normalized - 0.5)));
+            // Riconverti 0-1 -> 0-255
+            return Math.round(curved * 255);
         }
 
-        async function processWithMistral(ocrText) {
+        // Soglia adattiva per documenti (bianco/nero)
+        function adaptiveThreshold(enhancedValue, originalValue) {
+            // Soglie dinamiche basate sul valore originale
+            if (originalValue < 60) {
+                return 0; // Nero puro per testo scuro
+            } else if (originalValue > 200) {
+                return 255; // Bianco puro per sfondo
+            } else {
+                // Zona grigia - usa valore migliorato ma con boost
+                return enhancedValue > 128 ? 255 : 0;
+            }
+        }
+
+        async function performOCR(imageFile) {
             try {
+                // Termina worker precedente se esiste
+                if (ocrWorker) {
+                    try {
+                        await ocrWorker.terminate();
+                    } catch (e) {
+                        console.log('Worker già terminato');
+                    }
+                }
+
+                console.log('Inizializzazione Tesseract con configurazione minimal...');
+                console.log('Dimensione file:', imageFile.size, 'bytes');
+
+                // Configurazione più semplice possibile
+                ocrWorker = await Tesseract.createWorker(['ita'], 1, {
+                    logger: (m) => {
+                        if (m.status === 'recognizing text') {
+                            const progress = Math.round(m.progress * 100);
+                            document.getElementById('ocrProgress').style.width = progress + '%';
+                            document.querySelector('#step2 .step-text').textContent = 
+                                `2. OCR in corso... ${progress}% (${m.status})`;
+                        } else {
+                            console.log('Tesseract:', m.status, m.progress ? `${Math.round(m.progress * 100)}%` : '');
+                        }
+                    }
+                });
+
+                console.log('Worker creato con successo, avvio riconoscimento...');
+
+                // Nessuna configurazione aggiuntiva - usa solo i default
+                const startTime = Date.now();
+                
+                const result = await ocrWorker.recognize(imageFile);
+                
+                const duration = Date.now() - startTime;
+                console.log(`OCR completato in ${duration}ms`);
+                console.log('Confidenza:', result.data.confidence);
+                console.log('Testo estratto (lunghezza):', result.data.text.length);
+                console.log('Prime 200 caratteri:', result.data.text.substring(0, 200));
+
+                const text = result.data.text;
+
+                // Termina worker
+                await ocrWorker.terminate();
+                ocrWorker = null;
+
+                // Pulizia minima del testo
+                const cleanedText = text
+                    .replace(/\n+/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+
+                console.log('Testo pulito finale (lunghezza):', cleanedText.length);
+                
+                if (cleanedText.length < 10) {
+                    throw new Error('Testo estratto troppo corto. L\'immagine potrebbe essere troppo scura o sfocata.');
+                }
+
+                return cleanedText;
+
+            } catch (error) {
+                console.error('Errore dettagliato OCR:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+                
+                if (ocrWorker) {
+                    try {
+                        await ocrWorker.terminate();
+                        console.log('Worker terminato dopo errore');
+                    } catch (terminateError) {
+                        console.error('Errore terminazione worker:', terminateError);
+                    }
+                    ocrWorker = null;
+                }
+                
+                // Messaggi di errore più specifici
+                if (error.message.includes('Aborted')) {
+                    throw new Error('OCR interrotto. L\'immagine potrebbe essere corrotta o in formato non supportato.');
+                } else if (error.message.includes('RuntimeError')) {
+                    throw new Error('Errore interno OCR. Prova con un\'immagine più semplice o di dimensioni diverse.');
+                } else if (error.message.includes('network') || error.message.includes('fetch')) {
+                    throw new Error('Errore di connessione durante il download dei modelli OCR. Verifica la connessione internet.');
+                } else {
+                    throw new Error(`OCR fallito: ${error.message}`);
+                }
+            }
+        }
+
+        async function analyzeWithMistral(text) {
+            try {
+                // Pre-elabora il testo per evidenziare la struttura
+                const structuredText = preprocessTextForMistral(text);
+                
+                console.log('Testo originale OCR:', text);
+                console.log('Testo strutturato per Mistral:', structuredText);
+
+                // Mostra entrambi i testi nell'UI
+                document.getElementById('ocrOutput').textContent = text;
+                document.getElementById('structuredOutput').textContent = structuredText;
+
                 const response = await fetch('/api/mistral/analyze', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        ocrText: ocrText
+                        ocrText: structuredText
                     })
                 });
 
@@ -648,6 +924,95 @@
                 console.error('Errore chiamata API:', error);
                 throw error;
             }
+        }
+
+        function preprocessTextForMistral(text) {
+            // Pulizia aggressiva del testo OCR prima dell'elaborazione
+            let cleanedText = text
+                // Rimuovi caratteri di disturbo comuni
+                .replace(/[=\-_|~`'"""''«»<>{}[\]\\]/g, ' ')
+                // Rimuovi sequenze di caratteri ripetuti
+                .replace(/(.)\1{3,}/g, '$1')
+                // Rimuovi numeri isolati che potrebbero essere di disturbo
+                .replace(/\b\d\s+/g, ' ')
+                // Normalizza spazi e newline
+                .replace(/\s+/g, ' ')
+                .replace(/\n+/g, '\n');
+
+            const lines = cleanedText.split(/\n+/).map(line => line.trim()).filter(line => line.length > 1);
+            
+            let structuredText = "";
+            let i = 0;
+            
+            while (i < lines.length) {
+                const currentLine = lines[i];
+                const nextLine = i + 1 < lines.length ? lines[i + 1] : '';
+                
+                // Pattern per identificare etichette (italiano e inglese)
+                const labelPatterns = {
+                    nome: /^(NOME|NAME|GIVEN\s*NAME)\b/i,
+                    cognome: /^(COGNOME|SURNAME|FAMILY\s*NAME|LAST\s*NAME)\b/i,
+                    dataNascita: /^(NATO|BORN|DATA\s*DI\s*NASCITA|DATE\s*OF\s*BIRTH|BIRTH)\b/i,
+                    luogoNascita: /^(NATO\s*A|LUOGO\s*DI\s*NASCITA|PLACE\s*OF\s*BIRTH|BIRTHPLACE)\b/i,
+                    codiceFiscale: /^(CODICE\s*FISCALE|TAX\s*CODE|FISCAL\s*CODE)\b/i,
+                    numeroDocumento: /^(NUMERO|NUMBER|N\.|NUM|DOCUMENT\s*NUMBER)\b/i,
+                    dataRilascio: /^(RILASCIATA|ISSUED|DATA\s*DI\s*RILASCIO|ISSUE\s*DATE)\b/i,
+                    dataScadenza: /^(SCADENZA|EXPIRES|VALID\s*UNTIL|VALIDA\s*FINO|EXPIRY)\b/i
+                };
+                
+                let isLabel = false;
+                let labelType = '';
+                
+                // Controlla se la riga corrente è un'etichetta
+                for (const [type, pattern] of Object.entries(labelPatterns)) {
+                    if (pattern.test(currentLine)) {
+                        isLabel = true;
+                        labelType = type.toUpperCase();
+                        break;
+                    }
+                }
+                
+                if (isLabel) {
+                    // Cerca il valore associato
+                    let value = '';
+                    
+                    // Prima controlla se il valore è nella stessa riga (dopo : o spazio)
+                    const sameLine = currentLine.replace(/^(NOME|NAME|GIVEN\s*NAME|COGNOME|SURNAME|FAMILY\s*NAME|LAST\s*NAME|NATO|BORN|DATA\s*DI\s*NASCITA|DATE\s*OF\s*BIRTH|BIRTH|NATO\s*A|LUOGO\s*DI\s*NASCITA|PLACE\s*OF\s*BIRTH|BIRTHPLACE|CODICE\s*FISCALE|TAX\s*CODE|FISCAL\s*CODE|NUMERO|NUMBER|N\.|NUM|DOCUMENT\s*NUMBER|RILASCIATA|ISSUED|DATA\s*DI\s*RILASCIO|ISSUE\s*DATE|SCADENZA|EXPIRES|VALID\s*UNTIL|VALIDA\s*FINO|EXPIRY)\s*:?\s*/i, '').trim();
+                    
+                    if (sameLine && sameLine.length > 0) {
+                        value = sameLine;
+                    } else if (nextLine && !Object.values(labelPatterns).some(pattern => pattern.test(nextLine))) {
+                        // Il valore è nella riga successiva
+                        value = nextLine;
+                        i++; // Salta la riga successiva
+                    }
+                    
+                    if (value) {
+                        // Pulisci ulteriormente il valore
+                        value = value
+                            .replace(/[=\-_|~`]/g, '')
+                            .replace(/\s+/g, ' ')
+                            .trim();
+                            
+                        structuredText += `${labelType}: ${value}\n`;
+                    } else {
+                        structuredText += `${labelType}:\n`;
+                    }
+                } else {
+                    // Non è un'etichetta, ma potrebbe essere un valore importante
+                    // Controlla se assomiglia a dati utili
+                    if (currentLine.match(/^\d{2}\/\d{2}\/\d{4}$/) || // Data
+                        currentLine.match(/^[A-Z]{6}\d{2}[A-Z]\d{2}[A-Z]\d{3}[A-Z]$/) || // Codice Fiscale
+                        currentLine.match(/^[A-Z]{2}\d+$/) || // Numero documento
+                        (currentLine.length >= 2 && !currentLine.match(/^(REPUBBLICA|ITALIANA|CARTA|IDENTITÀ|IDENTITY|DOCUMENT)$/i))) {
+                        structuredText += `VALORE_LIBERO: ${currentLine}\n`;
+                    }
+                }
+                
+                i++;
+            }
+            
+            return structuredText.trim();
         }
 
         function updateStep(stepId, status) {
@@ -680,7 +1045,7 @@
         function copyToClipboard() {
             if (extractedData) {
                 navigator.clipboard.writeText(JSON.stringify(extractedData, null, 2));
-                showSuccess('📋 Dati copiati negli appunti!');
+                showSuccess('📋 Dati copiati negli appunti in formato JSON!');
             }
         }
 
@@ -690,10 +1055,13 @@
             fileInput.value = '';
             preview.innerHTML = '';
             results.style.display = 'none';
-            rawText.style.display = 'none';
+            ocrText.style.display = 'none';
             steps.style.display = 'none';
             copyBtn.style.display = 'none';
             analyzeBtn.disabled = true;
+            
+            // Reset progress
+            document.getElementById('ocrProgress').style.width = '0%';
             
             // Reset steps
             ['step1', 'step2', 'step3', 'step4'].forEach(id => {
@@ -702,32 +1070,58 @@
                 step.querySelector('.step-icon').textContent = '⏳';
             });
             
-            // Pulisci messaggi
-            const messages = document.querySelectorAll('.error, .success');
-            messages.forEach(msg => msg.remove());
+            // Reset step text
+            document.querySelector('#step2 .step-text').textContent = '2. Riconoscimento testo OCR...';
+            
+            clearMessages();
         }
 
         function showError(message) {
+            clearMessages();
             const errorDiv = document.createElement('div');
             errorDiv.className = 'error';
             errorDiv.textContent = message;
-            
-            const oldMessages = document.querySelectorAll('.error, .success');
-            oldMessages.forEach(msg => msg.remove());
-            
-            document.querySelector('.container').insertBefore(errorDiv, results);
+            document.querySelector('.container').appendChild(errorDiv);
+            errorDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
 
         function showSuccess(message) {
+            clearMessages();
             const successDiv = document.createElement('div');
             successDiv.className = 'success';
             successDiv.textContent = message;
-            
-            const oldMessages = document.querySelectorAll('.error, .success');
-            oldMessages.forEach(msg => msg.remove());
-            
-            document.querySelector('.container').insertBefore(successDiv, results);
+            document.querySelector('.container').appendChild(successDiv);
+            successDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
+
+        function showWarning(message) {
+            clearMessages();
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning';
+            warningDiv.textContent = message;
+            document.querySelector('.container').appendChild(warningDiv);
+        }
+
+        function clearMessages() {
+            const messages = document.querySelectorAll('.error, .success, .warning');
+            messages.forEach(msg => msg.remove());
+        }
+
+        // Check se Tesseract è disponibile
+        window.addEventListener('load', () => {
+            if (typeof Tesseract === 'undefined') {
+                showError('⚠️ Errore caricamento libreria OCR. Ricarica la pagina.');
+            } else {
+                showWarning('📚 Sistema OCR caricato. Carica un\'immagine per iniziare l\'analisi automatica.');
+            }
+        });
+
+        // Cleanup al chiudere la pagina
+        window.addEventListener('beforeunload', async () => {
+            if (ocrWorker) {
+                await ocrWorker.terminate();
+            }
+        });
     </script>
 </body>
 </html>
