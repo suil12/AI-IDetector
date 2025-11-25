@@ -419,14 +419,14 @@ process.on('unhandledRejection', (reason, promise) => {
 // Avvio server
 const server = app.listen(PORT, () => {
   console.log('='.repeat(70));
-  console.log(`🚀 OCR Documenti Identità Server v1.0`);
+  console.log(` OCR Documenti Identità Server v1.0`);
   console.log('='.repeat(70));
-  console.log(`📡 Server avviato su porta: ${PORT}`);
-  console.log(`📝 Ambiente: ${process.env.NODE_ENV || 'development'}`);
-  console.log(`🔑 Mistral API configurata: ${!!process.env.MISTRAL_API_KEY ? '✅' : '❌'}`);
-  console.log(`🌐 URL locale: http://localhost:${PORT}`);
-  console.log(`🔓 CSP disabilitato per compatibilità OCR`);
-  console.log(`⚡ Endpoints disponibili:`);
+  console.log(` Server avviato su porta: ${PORT}`);
+  console.log(` Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  console.log(` Mistral API configurata: ${!!process.env.MISTRAL_API_KEY ? 'Yes' : 'No'}`);
+  console.log(` URL locale: http://localhost:${PORT}`);
+  console.log(` CSP disabilitato per compatibilità OCR`);
+  console.log(` Endpoints disponibili:`);
   console.log(`   - Health: http://localhost:${PORT}/api/health`);
   console.log(`   - Test Mistral: http://localhost:${PORT}/api/test-mistral`);
   console.log(`   - Analizza: http://localhost:${PORT}/api/mistral/analyze`);
@@ -435,11 +435,11 @@ const server = app.listen(PORT, () => {
   console.log('='.repeat(70));
   
   if (!process.env.MISTRAL_API_KEY) {
-    console.log('⚠️  ATTENZIONE: Configura MISTRAL_API_KEY nel file .env');
+    console.log('  ATTENZIONE: Configura MISTRAL_API_KEY nel file .env');
     console.log('   Registrati su: https://console.mistral.ai');
     console.log('='.repeat(70));
   } else {
-    console.log('✅ Sistema pronto per l\'estrazione automatica OCR + AI');
+    console.log(' Sistema pronto per l\'estrazione automatica OCR + AI');
     console.log('='.repeat(70));
   }
 });
