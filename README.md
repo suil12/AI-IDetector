@@ -3,7 +3,7 @@
 
 Applicazione web per l'estrazione automatica di dati da documenti di identità italiani utilizzando OCR (Tesseract.js) e intelligenza artificiale (Mistral AI).
 
-## 🚀 Caratteristiche
+## Caratteristiche
 
 - **OCR Gratuito**: Estrazione testo con Tesseract.js (lato client)
 - **IA Avanzata**: Elaborazione intelligente con Mistral AI
@@ -11,7 +11,7 @@ Applicazione web per l'estrazione automatica di dati da documenti di identità i
 - **Sicurezza**: API key protette nel backend
 - **Zero Costi Base**: Hosting gratuito su Render
 
-## 📋 Documenti Supportati
+## Documenti Supportati
 
 - Carta d'Identità italiana
 - Patente di guida
@@ -19,7 +19,7 @@ Applicazione web per l'estrazione automatica di dati da documenti di identità i
 
 **Formati**: JPG, PNG (max 5MB)
 
-## 🛠️ Installazione
+## Installazione
 
 ### Prerequisiti
 - Node.js 18+
@@ -108,7 +108,7 @@ ocr-documenti-identita/
 3. **Visualizza**: I dati estratti appariranno nei campi sottostanti
 4. **Copia**: Usa il pulsante "Copia Dati JSON" per esportare
 
-## 🎨 Personalizzazione
+## Personalizzazione
 
 ### Aggiungere Logo
 Sostituisci nell'`index.html`:
@@ -128,13 +128,13 @@ Sostituisci i placeholder nella sezione immagini:
 
 
 
-## 📊 Prestazioni
+## Prestazioni
 
 - **OCR**: ~2-5 secondi (dipende dalla dimensione immagine)
 - **Mistral AI**: ~1-3 secondi
 - **Totale**: ~3-8 secondi per documento
 
-## 🐛 Risoluzione Problemi
+## Risoluzione Problemi
 
 ### Errore 401 (Unauthorized)
 - Verifica che la chiave API Mistral sia corretta
@@ -151,7 +151,4 @@ Sostituisci i placeholder nella sezione immagini:
 - Verifica le configurazioni CORS
 
 
-## 🤝 Contributi
-
-I contributi sono benvenuti! Apri una issue o invia una pull request.
 
